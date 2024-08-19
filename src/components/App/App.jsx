@@ -5,15 +5,19 @@ import Options from "../Options/Options";
 import Notification from "../Notification/Notification";
 import styles from "./App.module.css";
 
-const App = () => {
-  const [feedback, setFeedback] = useState({ good: 0, neutral: 0, bad: 0 });
+const initialFeedback = {
+  good: 0,
+  neutral: 0,
+  bad: 0,
+};
 
-  useEffect(() => {
-    const storedFeedback = localStorage.getItem("feedback");
-    if (storedFeedback) {
-      setFeedback(JSON.parse(storedFeedback));
-    }
-  }, []);
+function getInitialFeedback() {
+  const savedFeedback = window.localStorage.getItem("current-feedback");
+  return savedFeedback !== null ? JSON.parse(savedFeedback) : initialFeedback;
+}
+
+export default function App() {
+  const [feedback, setFeedback] = useState(getInitialFeedback);
 
   useEffect(() => {
     localStorage.setItem("feedback", JSON.stringify(feedback));
@@ -52,6 +56,4 @@ const App = () => {
       )}
     </div>
   );
-};
-
-export default App;
+}
