@@ -5,15 +5,11 @@ import Options from "../Options/Options";
 import Notification from "../Notification/Notification";
 import styles from "./App.module.css";
 
-const initialFeedback = {
-  good: 0,
-  neutral: 0,
-  bad: 0,
-};
-
 function getInitialFeedback() {
-  const savedFeedback = window.localStorage.getItem("current-feedback");
-  return savedFeedback !== null ? JSON.parse(savedFeedback) : initialFeedback;
+  const savedFeedback = localStorage.getItem("feedback");
+  return savedFeedback
+    ? JSON.parse(savedFeedback)
+    : { good: 0, neutral: 0, bad: 0 };
 }
 
 export default function App() {
